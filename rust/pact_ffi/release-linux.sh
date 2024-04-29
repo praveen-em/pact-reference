@@ -15,8 +15,14 @@ cargo_flags=( "$@" )
 
 # Build the x86_64 GNU linux release
 build_x86_64_gnu() {
-    install_cross
-    cross build --target x86_64-unknown-linux-gnu "${cargo_flags[@]}"
+        BUILD_SCRIPT=$(cat <<EOM
+cd /app && \
+cargo build --target x86_64-unknown-linux-gnu
+EOM
+        )
+
+    # Using rust:buster image to build with glibc 2.28 
+    docker run --rm -v $RUST_DIR:/app --platform linux/amd64 rust:buster /bin/sh -c "$BUILD_SCRIPT" "${cargo_flags[@]}"
 
     if [[ "${cargo_flags[*]}" =~ "--release" ]]; then
         gzip_and_sum \
@@ -30,8 +36,7 @@ build_x86_64_gnu() {
 
 build_x86_64_musl() {
     sudo apt-get install -y musl-tools
-    install_cross
-    cross build --target x86_64-unknown-linux-musl "${cargo_flags[@]}"
+    cargo build --target x86_64-unknown-linux-musl "${cargo_flags[@]}"
 
     if [[ "${cargo_flags[*]}" =~ "--release" ]]; then
         BUILD_SCRIPT=$(cat <<EOM
