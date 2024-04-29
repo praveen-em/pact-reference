@@ -60,7 +60,7 @@ EOM
 }
 
 install_cross() {
-    cargo install cross@0.2.5
+    cargo install cross@0.2.4
 }
 
 build_aarch64_gnu() {
