@@ -14,9 +14,8 @@ export CARGO_TARGET_DIR=${CARO_TARGET_DIR:-"$RUST_DIR/target"}
 cargo_flags=( "$@" )
 
 # Build the x86_64 GNU linux release
-build_x86_64_gnu() {
-    install_cross
-    cross build --target x86_64-unknown-linux-gnu "${cargo_flags[@]}"
+build_x86_64_gnu() {    
+    cargo build --target x86_64-unknown-linux-gnu "${cargo_flags[@]}"
 
     if [[ "${cargo_flags[*]}" =~ "--release" ]]; then
         gzip_and_sum \
