@@ -29,8 +29,7 @@ build_x86_64_gnu() {
 
 build_x86_64_musl() {
     sudo apt-get install -y musl-tools
-    install_cross
-    cross build --target x86_64-unknown-linux-musl "${cargo_flags[@]}"
+    cargo build --target x86_64-unknown-linux-musl "${cargo_flags[@]}"
 
     if [[ "${cargo_flags[*]}" =~ "--release" ]]; then
         BUILD_SCRIPT=$(cat <<EOM
