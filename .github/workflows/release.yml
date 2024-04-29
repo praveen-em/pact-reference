@@ -29,8 +29,6 @@ jobs:
             targets: aarch64-apple-darwin,x86_64-apple-darwin
       fail-fast: false
     
-    container: debian:buster
-    
     env:
       pact_do_not_track: true
 

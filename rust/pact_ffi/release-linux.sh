@@ -15,7 +15,14 @@ cargo_flags=( "$@" )
 
 # Build the x86_64 GNU linux release
 build_x86_64_gnu() {    
-    cargo build --target x86_64-unknown-linux-gnu "${cargo_flags[@]}"
+
+    BUILD_SCRIPT=$(cat <<EOM
+cd /app && \
+cargo build --target x86_64-unknown-linux-gnu
+EOM
+        )
+
+    docker run --rm -v $RUST_DIR:/app --platform linux/amd64 rust:buster /bin/sh -c "$BUILD_SCRIPT" "${cargo_flags[@]}"
 
     if [[ "${cargo_flags[*]}" =~ "--release" ]]; then
         gzip_and_sum \
