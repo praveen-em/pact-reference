@@ -40,7 +40,7 @@ rand = "0.8.5"
 rand_regex = "0.15.1"
 regex = "1.10.2"
 regex-syntax = "0.6.29"
-serde = { version = "1.0.193", features = ["derive"] }
+serde = { version = "1.0.171", features = ["derive"] }
 serde_json = "1.0.108"
 sxd-document = "0.3.2"
 thiserror = "1.0.51"
